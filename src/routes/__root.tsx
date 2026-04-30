@@ -39,8 +39,8 @@ export const Route = createRootRoute({
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Listable by Listly" },
       { name: "twitter:description", content: "Listable by Listly creates custom lists with automatically populated data from web searches." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/I1ff9HIOEobOIY0FbIGeKHry9Ei2/social-images/social-1777510627838-Capture67.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/I1ff9HIOEobOIY0FbIGeKHry9Ei2/social-images/social-1777510627838-Capture67.webp" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9cf03cd4-9fb0-4918-97eb-f8b9057a45b5" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9cf03cd4-9fb0-4918-97eb-f8b9057a45b5" },
     ],
     links: [
       {
