@@ -133,7 +133,9 @@ function Index() {
             <ListPlus className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Listly</h1>
+            <h1 className="text-lg font-semibold tracking-tight">
+              Listable <span className="text-muted-foreground font-normal">by Listly</span>
+            </h1>
             <p className="text-xs text-muted-foreground">
               Build any list. Copy it free.
             </p>
