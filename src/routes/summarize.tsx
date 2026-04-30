@@ -34,7 +34,7 @@ export const Route = createFileRoute("/summarize")({
 function SummarizePage() {
   const { t, lang } = useI18n();
   const [input, setInput] = useState("");
-  const [mode, setMode] = useState<"summary" | "description" | "keypoints" | "tldr">("summary");
+  const [mode, setMode] = useState<"summary" | "description" | "keypoints" | "tldr" | "code">("summary");
   const [length, setLength] = useState<"short" | "medium" | "long">("medium");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,7 +82,7 @@ function SummarizePage() {
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={t("sum_input_ph")}
+            placeholder={mode === "code" ? t("sum_input_code_ph") : t("sum_input_ph")}
             rows={8}
             className="text-base"
           />
@@ -98,6 +98,7 @@ function SummarizePage() {
                 <SelectItem value="description">{t("mode_description")}</SelectItem>
                 <SelectItem value="keypoints">{t("mode_keypoints")}</SelectItem>
                 <SelectItem value="tldr">{t("mode_tldr")}</SelectItem>
+                <SelectItem value="code">{t("mode_code")}</SelectItem>
               </SelectContent>
             </Select>
           </div>

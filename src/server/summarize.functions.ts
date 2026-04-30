@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const InputSchema = z.object({
   input: z.string().min(1).max(20000),
-  mode: z.enum(["summary", "description", "keypoints", "tldr"]),
+  mode: z.enum(["summary", "description", "keypoints", "tldr", "code"]),
   length: z.enum(["short", "medium", "long"]),
   lang: z.string().min(2).max(8),
 });
@@ -42,8 +42,10 @@ export const summarize = createServerFn({ method: "POST" })
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 
     let source = data.input.trim();
-    let kind: "url" | "text" = "text";
-    if (isUrl(source)) {
+    let kind: "url" | "text" | "code" = "text";
+    if (data.mode === "code") {
+      kind = "code";
+    } else if (isUrl(source)) {
       kind = "url";
       try {
         source = await fetchUrlText(source);
@@ -64,6 +66,7 @@ export const summarize = createServerFn({ method: "POST" })
       description: "Write a clear description of what this is and what it does.",
       keypoints: "Return the key points as a markdown bullet list.",
       tldr: "Write a single-line TL;DR.",
+      code: "Summarize what this code does: its purpose, main functions/classes, inputs, outputs, and notable logic. Use a markdown bullet list.",
     }[data.mode];
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {

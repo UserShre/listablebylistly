@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const InputSchema = z.object({
-  topic: z.string().min(1).max(2000),
-  kind: z.enum(["product", "website", "app", "person", "place", "event", "general"]),
+  topic: z.string().min(1).max(20000),
+  kind: z.enum(["product", "website", "app", "person", "place", "event", "general", "code"]),
   tone: z.enum(["neutral", "professional", "friendly", "playful", "luxury", "technical"]),
   words: z.number().int().min(5).max(500),
   lang: z.string().min(2).max(8),
@@ -30,11 +30,14 @@ export const describe = createServerFn({ method: "POST" })
         messages: [
           {
             role: "system",
-            content: `You write polished descriptions. Subject type: ${kind}. Tone: ${tone}. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Output the description only — no preamble, no quotes, no headings.`,
+            content:
+              kind === "code"
+                ? `You write clear descriptions of source code. Explain what the code does, its purpose, and how it works. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Plain prose, no code blocks, no preamble.`
+                : `You write polished descriptions. Subject type: ${kind}. Tone: ${tone}. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Output the description only — no preamble, no quotes, no headings.`,
           },
           {
             role: "user",
-            content: `Write a description of: ${topic}`,
+            content: kind === "code" ? `Describe this code:\n\n${topic}` : `Write a description of: ${topic}`,
           },
         ],
       }),
