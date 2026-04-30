@@ -3,9 +3,10 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Copy, Check, ListPlus } from "lucide-react";
+import { Plus, Trash2, Copy, Check, ListPlus, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
+import { generateList } from "@/server/generate.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -29,6 +30,31 @@ function Index() {
   const [newCol, setNewCol] = useState("");
   const [rows, setRows] = useState<Row[]>([{ name: "", value: "" }]);
   const [copied, setCopied] = useState<string | null>(null);
+  const [count, setCount] = useState(10);
+  const [generating, setGenerating] = useState(false);
+
+  const handleGenerate = async () => {
+    if (!listName.trim()) {
+      toast.error("Add a list name first");
+      return;
+    }
+    setGenerating(true);
+    try {
+      const result = await generateList({
+        data: { listName: listName.trim(), columns, count },
+      });
+      if (!result.rows.length) {
+        toast.error("No rows returned. Try a different list name.");
+        return;
+      }
+      setRows(result.rows);
+      toast.success(`Generated ${result.rows.length} rows`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const addColumn = () => {
     const c = newCol.trim();
@@ -127,6 +153,47 @@ function Index() {
             className="h-14 text-xl font-semibold"
           />
         </section>
+
+        <Card className="p-4 bg-gradient-to-br from-primary/5 to-transparent border-primary/20">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-3">
+            <div className="flex-1 space-y-1.5">
+              <label className="text-sm font-medium flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-primary" />
+                Auto-fill with AI
+              </label>
+              <p className="text-xs text-muted-foreground">
+                Define your columns below, then let AI fill the rows for you.
+              </p>
+            </div>
+            <div className="flex items-end gap-2">
+              <div className="space-y-1">
+                <label className="text-xs text-muted-foreground">Rows</label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={count}
+                  onChange={(e) =>
+                    setCount(Math.max(1, Math.min(100, Number(e.target.value) || 1)))
+                  }
+                  className="h-10 w-20"
+                />
+              </div>
+              <Button
+                onClick={handleGenerate}
+                disabled={generating}
+                className="h-10"
+              >
+                {generating ? (
+                  <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-4 w-4 mr-1.5" />
+                )}
+                Generate
+              </Button>
+            </div>
+          </div>
+        </Card>
 
         <section className="space-y-3">
           <div className="flex items-center justify-between">
