@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { ListPlus, FileText, MessageSquare, Languages, PenLine } from "lucide-react";
+import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
