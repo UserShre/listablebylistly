@@ -30,11 +30,14 @@ export const describe = createServerFn({ method: "POST" })
         messages: [
           {
             role: "system",
-            content: `You write polished descriptions. Subject type: ${kind}. Tone: ${tone}. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Output the description only — no preamble, no quotes, no headings.`,
+            content:
+              kind === "code"
+                ? `You write clear descriptions of source code. Explain what the code does, its purpose, and how it works. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Plain prose, no code blocks, no preamble.`
+                : `You write polished descriptions. Subject type: ${kind}. Tone: ${tone}. Target: about ${words} words (between ${min} and ${max}). Reply ONLY in language code "${lang}". Output the description only — no preamble, no quotes, no headings.`,
           },
           {
             role: "user",
-            content: `Write a description of: ${topic}`,
+            content: kind === "code" ? `Describe this code:\n\n${topic}` : `Write a description of: ${topic}`,
           },
         ],
       }),
