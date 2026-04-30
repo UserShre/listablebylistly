@@ -35,7 +35,7 @@ export const Route = createFileRoute("/describe")({
 function DescribePage() {
   const { t, lang } = useI18n();
   const [topic, setTopic] = useState("");
-  const [kind, setKind] = useState<"product" | "website" | "app" | "person" | "place" | "event" | "general">("product");
+  const [kind, setKind] = useState<"product" | "website" | "app" | "person" | "place" | "event" | "general" | "code">("product");
   const [tone, setTone] = useState<"neutral" | "professional" | "friendly" | "playful" | "luxury" | "technical">("professional");
   const [words, setWords] = useState(60);
   const [result, setResult] = useState("");
@@ -86,9 +86,9 @@ function DescribePage() {
           <Textarea
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            placeholder={t("desc_topic_ph")}
-            rows={4}
-            className="text-base"
+            placeholder={kind === "code" ? t("desc_topic_code_ph") : t("desc_topic_ph")}
+            rows={kind === "code" ? 10 : 4}
+            className={kind === "code" ? "text-xs font-mono" : "text-base"}
           />
         </section>
 
@@ -105,6 +105,7 @@ function DescribePage() {
                 <SelectItem value="place">{t("kind_place")}</SelectItem>
                 <SelectItem value="event">{t("kind_event")}</SelectItem>
                 <SelectItem value="general">{t("kind_general")}</SelectItem>
+                <SelectItem value="code">{t("kind_code")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
