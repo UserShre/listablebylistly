@@ -3,10 +3,12 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Copy, Check, ListPlus, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Trash2, Copy, Check, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { generateList } from "@/server/generate.functions";
+import { SiteHeader } from "@/components/site-header";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,6 +27,7 @@ export const Route = createFileRoute("/")({
 type Row = Record<string, string>;
 
 function Index() {
+  const { t } = useI18n();
   const [listName, setListName] = useState("");
   const [columns, setColumns] = useState<string[]>(["name", "value"]);
   const [newCol, setNewCol] = useState("");
@@ -127,31 +130,17 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Toaster />
-      <header className="border-b border-border/60 bg-card/50 backdrop-blur sticky top-0 z-10">
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <ListPlus className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight">
-              Listable <span className="text-muted-foreground font-normal">by Listly</span>
-            </h1>
-            <p className="text-xs text-muted-foreground">
-              Build any list. Copy it free.
-            </p>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="mx-auto max-w-5xl px-6 py-10 space-y-8">
         <section className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
-            List name
+            {t("list_name")}
           </label>
           <Input
             value={listName}
             onChange={(e) => setListName(e.target.value)}
-            placeholder="e.g. Top 100 most viewed YouTube channels"
+            placeholder={t("list_placeholder")}
             className="h-14 text-xl font-semibold"
           />
         </section>
@@ -161,15 +150,15 @@ function Index() {
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium flex items-center gap-1.5">
                 <Sparkles className="h-4 w-4 text-primary" />
-                Auto-fill with AI
+                {t("autofill")}
               </label>
               <p className="text-xs text-muted-foreground">
-                Define your columns below, then let AI fill the rows for you.
+                {t("autofill_hint")}
               </p>
             </div>
             <div className="flex items-end gap-2">
               <div className="space-y-1">
-                <label className="text-xs text-muted-foreground">Rows</label>
+                <label className="text-xs text-muted-foreground">{t("rows")}</label>
                 <Input
                   type="number"
                   min={1}
@@ -191,7 +180,7 @@ function Index() {
                 ) : (
                   <Sparkles className="h-4 w-4 mr-1.5" />
                 )}
-                Generate
+                {t("generate")}
               </Button>
             </div>
           </div>
@@ -200,7 +189,7 @@ function Index() {
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-muted-foreground">
-              Columns
+              {t("columns")}
             </label>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -224,7 +213,7 @@ function Index() {
                 value={newCol}
                 onChange={(e) => setNewCol(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addColumn())}
-                placeholder="add column…"
+                placeholder={t("add_column")}
                 className="h-9 w-40"
               />
               <Button onClick={addColumn} size="sm" variant="secondary">
@@ -236,7 +225,7 @@ function Index() {
 
         <section className="space-y-3">
           <label className="text-sm font-medium text-muted-foreground">
-            Rows
+            {t("rows")}
           </label>
           <Card className="overflow-hidden p-0">
             <div className="overflow-x-auto">
@@ -293,14 +282,14 @@ function Index() {
           </Card>
           <Button onClick={addRow} variant="outline" className="w-full">
             <Plus className="h-4 w-4 mr-2" />
-            Add row
+            {t("add_row")}
           </Button>
         </section>
 
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-muted-foreground">
-              Copy your list
+              {t("copy_list")}
             </label>
             <div className="flex gap-2">
               {(["text", "csv", "md"] as const).map((k) => (
@@ -328,7 +317,7 @@ function Index() {
         </section>
 
         <footer className="pt-6 pb-10 text-center text-xs text-muted-foreground">
-          Free forever · No signup · Your data stays in your browser
+          {t("footer")}
         </footer>
       </main>
     </div>
