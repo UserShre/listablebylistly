@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Listly — Free List Maker. Build & Copy Lists Instantly" },
+      { title: "Listable by Listly — Free AI List Maker. Build & Copy Lists Instantly" },
       {
         name: "description",
         content:
