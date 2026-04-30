@@ -29,14 +29,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Listable by Listly" },
+      { name: "description", content: "Listable by Listly creates custom lists with automatically populated data from web searches." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Listable by Listly" },
+      { property: "og:description", content: "Listable by Listly creates custom lists with automatically populated data from web searches." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Listable by Listly" },
+      { name: "twitter:description", content: "Listable by Listly creates custom lists with automatically populated data from web searches." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/I1ff9HIOEobOIY0FbIGeKHry9Ei2/social-images/social-1777510627838-Capture67.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/I1ff9HIOEobOIY0FbIGeKHry9Ei2/social-images/social-1777510627838-Capture67.webp" },
     ],
     links: [
       {
