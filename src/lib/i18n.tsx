@@ -139,6 +139,7 @@ const translations: Record<Lang, Dict> = {
     desc_go: "Generar",
     desc_result: "Descripción",
   },
+  fr: {
     tagline: "Des listes adorables, des textes simplifiés.",
     list_name: "Nom de la liste",
     list_placeholder: "ex. Top 100 chaînes YouTube les plus vues",
