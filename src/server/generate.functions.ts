@@ -51,19 +51,16 @@ export const generateList = createServerFn({ method: "POST" })
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-2.5-flash-lite",
         messages: [
           {
             role: "system",
             content:
-              "You generate accurate, factual lists. Use your knowledge to fill the requested columns. Be concise per cell. If a value is unknown, write 'N/A'. Never invent data that doesn't exist.",
+              "Generate accurate, factual lists fast. Keep each cell short (1-6 words). Use 'N/A' if unknown. Never invent data.",
           },
           {
             role: "user",
-            content: `Generate a list titled: "${listName}".
-Return exactly ${count} rows.
-Each row must include these columns: ${columns.map((c) => `"${c}"`).join(", ")}.
-Order rows logically (e.g. by rank, popularity, date) when applicable.`,
+            content: `List: "${listName}". Return exactly ${count} rows with columns: ${columns.map((c) => `"${c}"`).join(", ")}. Order logically (rank/popularity/date).`,
           },
         ],
         tools: [tool],
