@@ -91,6 +91,12 @@ export function SiteHeader() {
               <span className="hidden md:inline">{t("describer")}</span>
             </Button>
           </Link>
+          <Link to="/code">
+            <Button variant={isActive("/code") ? "secondary" : "ghost"} size="sm">
+              <Code2 className="h-4 w-4" />
+              <span className="hidden md:inline">{t("coder")}</span>
+            </Button>
+          </Link>
         </nav>
 
         <DropdownMenu>
