@@ -6,7 +6,7 @@ type Dict = Record<string, string>;
 
 const translations: Record<Lang, Dict> = {
   en: {
-    tagline: "Build any list. Copy it free.",
+    tagline: "Lists made lovable, texts made easier.",
     list_name: "List name",
     list_placeholder: "e.g. Top 100 most viewed YouTube channels",
     autofill: "Auto-fill with AI",
@@ -50,7 +50,7 @@ const translations: Record<Lang, Dict> = {
     cancel: "Cancel",
   },
   es: {
-    tagline: "Crea cualquier lista. Cópiala gratis.",
+    tagline: "Listas con cariño, textos sin esfuerzo.",
     list_name: "Nombre de la lista",
     list_placeholder: "ej. Los 100 canales más vistos de YouTube",
     autofill: "Rellenar con IA",
@@ -94,7 +94,7 @@ const translations: Record<Lang, Dict> = {
     cancel: "Cancelar",
   },
   fr: {
-    tagline: "Créez des listes. Copiez-les gratuitement.",
+    tagline: "Des listes adorables, des textes simplifiés.",
     list_name: "Nom de la liste",
     list_placeholder: "ex. Top 100 chaînes YouTube les plus vues",
     autofill: "Remplir avec l'IA",
@@ -138,7 +138,7 @@ const translations: Record<Lang, Dict> = {
     cancel: "Annuler",
   },
   ar: {
-    tagline: "أنشئ أي قائمة. انسخها مجاناً.",
+    tagline: "قوائم محبوبة، ونصوص أسهل.",
     list_name: "اسم القائمة",
     list_placeholder: "مثال: أكثر 100 قناة يوتيوب مشاهدة",
     autofill: "تعبئة بالذكاء الاصطناعي",
@@ -182,7 +182,7 @@ const translations: Record<Lang, Dict> = {
     cancel: "إلغاء",
   },
   de: {
-    tagline: "Erstelle jede Liste. Kopiere sie kostenlos.",
+    tagline: "Listen mit Liebe, Texte leicht gemacht.",
     list_name: "Listenname",
     list_placeholder: "z.B. Top 100 meistgesehene YouTube-Kanäle",
     autofill: "Mit KI ausfüllen",
@@ -226,7 +226,7 @@ const translations: Record<Lang, Dict> = {
     cancel: "Abbrechen",
   },
   pt: {
-    tagline: "Crie qualquer lista. Copie grátis.",
+    tagline: "Listas com carinho, textos sem esforço.",
     list_name: "Nome da lista",
     list_placeholder: "ex. Top 100 canais mais vistos do YouTube",
     autofill: "Preencher com IA",
