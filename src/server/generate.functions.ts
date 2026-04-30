@@ -89,5 +89,11 @@ export const generateList = createServerFn({ method: "POST" })
       return out;
     });
 
-    return { rows: normalized };
+    // Enforce EXACT count: trim extras, pad blanks if short
+    const exact = normalized.slice(0, count);
+    while (exact.length < count) {
+      exact.push(Object.fromEntries(columns.map((c) => [c, ""])));
+    }
+
+    return { rows: exact };
   });
