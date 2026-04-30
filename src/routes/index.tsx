@@ -30,6 +30,31 @@ function Index() {
   const [newCol, setNewCol] = useState("");
   const [rows, setRows] = useState<Row[]>([{ name: "", value: "" }]);
   const [copied, setCopied] = useState<string | null>(null);
+  const [count, setCount] = useState(10);
+  const [generating, setGenerating] = useState(false);
+
+  const handleGenerate = async () => {
+    if (!listName.trim()) {
+      toast.error("Add a list name first");
+      return;
+    }
+    setGenerating(true);
+    try {
+      const result = await generateList({
+        data: { listName: listName.trim(), columns, count },
+      });
+      if (!result.rows.length) {
+        toast.error("No rows returned. Try a different list name.");
+        return;
+      }
+      setRows(result.rows);
+      toast.success(`Generated ${result.rows.length} rows`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const addColumn = () => {
     const c = newCol.trim();
