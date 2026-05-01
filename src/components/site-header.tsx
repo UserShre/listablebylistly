@@ -72,66 +72,67 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden sm:flex items-center gap-1">
-          <Link to="/">
-            <Button variant={isActive("/") ? "secondary" : "ghost"} size="sm">
-              <Home className="h-4 w-4" />
-              <span className="hidden md:inline">{t("home")}</span>
-            </Button>
-          </Link>
-          <Link to="/list">
-            <Button variant={isActive("/list") ? "secondary" : "ghost"} size="sm">
-              <ListPlus className="h-4 w-4" />
-              <span className="hidden md:inline">{t("listmaker")}</span>
-            </Button>
-          </Link>
-          <Link to="/summarize">
-            <Button variant={isActive("/summarize") ? "secondary" : "ghost"} size="sm">
-              <FileText className="h-4 w-4" />
-              <span className="hidden md:inline">{t("summarizer")}</span>
-            </Button>
-          </Link>
-          <Link to="/describe">
-            <Button variant={isActive("/describe") ? "secondary" : "ghost"} size="sm">
-              <PenLine className="h-4 w-4" />
-              <span className="hidden md:inline">{t("describer")}</span>
-            </Button>
-          </Link>
-          <Link to="/code">
-            <Button variant={isActive("/code") ? "secondary" : "ghost"} size="sm">
-              <Code2 className="h-4 w-4" />
-              <span className="hidden md:inline">{t("coder")}</span>
-            </Button>
-          </Link>
-        </nav>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" aria-label={t("language")}>
-              <Languages className="h-4 w-4" />
-              <span className="hidden md:inline uppercase text-xs">{lang}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {(Object.keys(LANG_LABELS) as Lang[]).map((l) => (
-              <DropdownMenuItem
-                key={l}
-                onClick={() => setLang(l)}
-                className={lang === l ? "font-semibold" : ""}
-              >
-                {LANG_LABELS[l]}
-              </DropdownMenuItem>
+        <TooltipProvider delayDuration={200}>
+          <nav className="flex items-center gap-1">
+            {[
+              { to: "/" as const, icon: Home, label: t("home") },
+              { to: "/list" as const, icon: ListPlus, label: t("listmaker") },
+              { to: "/summarize" as const, icon: FileText, label: t("summarizer") },
+              { to: "/describe" as const, icon: PenLine, label: t("describer") },
+              { to: "/code" as const, icon: Code2, label: t("coder") },
+            ].map(({ to, icon: Icon, label }) => (
+              <Tooltip key={to}>
+                <TooltipTrigger asChild>
+                  <Link to={to}>
+                    <Button
+                      variant={isActive(to) ? "secondary" : "ghost"}
+                      size="icon"
+                      aria-label={label}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>{label}</TooltipContent>
+              </Tooltip>
             ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </nav>
 
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm">
-              <MessageSquare className="h-4 w-4" />
-              <span className="hidden md:inline">{t("feedback")}</span>
-            </Button>
-          </DialogTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label={t("language")}>
+                    <Languages className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{t("language")} ({lang.toUpperCase()})</TooltipContent>
+              </Tooltip>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {(Object.keys(LANG_LABELS) as Lang[]).map((l) => (
+                <DropdownMenuItem
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={lang === l ? "font-semibold" : ""}
+                >
+                  {LANG_LABELS[l]}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" aria-label={t("feedback")}>
+                    <MessageSquare className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{t("feedback")}</TooltipContent>
+              </Tooltip>
+            </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{t("feedback_title")}</DialogTitle>
