@@ -63,11 +63,11 @@ export const generateList = createServerFn({ method: "POST" })
           {
             role: "system",
             content:
-              "Generate accurate, factual lists fast. Keep each cell short (1-6 words). Use 'N/A' if unknown. Never invent data.",
+              "Generate accurate, factual lists fast. Keep each cell short (1-6 words). Use 'N/A' if unknown. Never invent data. For URL columns, always return a real, working https:// URL — prefer official sites, then Wikipedia, then well-known platforms. Never return placeholder or example.com URLs.",
           },
           {
             role: "user",
-            content: `List: "${listName}". Return exactly ${count} rows with columns: ${columns.map((c) => `"${c}"`).join(", ")}. Order logically (rank/popularity/date).`,
+            content: `List: "${listName}". Return exactly ${count} rows with columns: ${columns.map((c) => `"${c}"`).join(", ")}.${linkSet.size ? ` These columns must contain real https:// URLs: ${[...linkSet].map((c) => `"${c}"`).join(", ")}.` : ""} Order logically (rank/popularity/date).`,
           },
         ],
         tools: [tool],
