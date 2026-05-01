@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Copy, Check, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Trash2, Copy, Check, Sparkles, Loader2, Link as LinkIcon, ExternalLink, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { generateList } from "@/server/generate.functions";
