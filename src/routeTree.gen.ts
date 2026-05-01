@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SummarizeRouteImport } from './routes/summarize'
+import { Route as ListRouteImport } from './routes/list'
 import { Route as DescribeRouteImport } from './routes/describe'
 import { Route as CodeRouteImport } from './routes/code'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SummarizeRoute = SummarizeRouteImport.update({
   id: '/summarize',
   path: '/summarize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListRoute = ListRouteImport.update({
+  id: '/list',
+  path: '/list',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DescribeRoute = DescribeRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
   '/describe': typeof DescribeRoute
+  '/list': typeof ListRoute
   '/summarize': typeof SummarizeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
   '/describe': typeof DescribeRoute
+  '/list': typeof ListRoute
   '/summarize': typeof SummarizeRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
   '/describe': typeof DescribeRoute
+  '/list': typeof ListRoute
   '/summarize': typeof SummarizeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/code' | '/describe' | '/summarize'
+  fullPaths: '/' | '/code' | '/describe' | '/list' | '/summarize'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/code' | '/describe' | '/summarize'
-  id: '__root__' | '/' | '/code' | '/describe' | '/summarize'
+  to: '/' | '/code' | '/describe' | '/list' | '/summarize'
+  id: '__root__' | '/' | '/code' | '/describe' | '/list' | '/summarize'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CodeRoute: typeof CodeRoute
   DescribeRoute: typeof DescribeRoute
+  ListRoute: typeof ListRoute
   SummarizeRoute: typeof SummarizeRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/summarize'
       fullPath: '/summarize'
       preLoaderRoute: typeof SummarizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list': {
+      id: '/list'
+      path: '/list'
+      fullPath: '/list'
+      preLoaderRoute: typeof ListRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/describe': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CodeRoute: CodeRoute,
   DescribeRoute: DescribeRoute,
+  ListRoute: ListRoute,
   SummarizeRoute: SummarizeRoute,
 }
 export const routeTree = rootRouteImport

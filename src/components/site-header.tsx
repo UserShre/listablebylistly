@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2 } from "lucide-react";
+import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -75,6 +75,12 @@ export function SiteHeader() {
         <nav className="hidden sm:flex items-center gap-1">
           <Link to="/">
             <Button variant={isActive("/") ? "secondary" : "ghost"} size="sm">
+              <Home className="h-4 w-4" />
+              <span className="hidden md:inline">{t("home")}</span>
+            </Button>
+          </Link>
+          <Link to="/list">
+            <Button variant={isActive("/list") ? "secondary" : "ghost"} size="sm">
               <ListPlus className="h-4 w-4" />
               <span className="hidden md:inline">{t("listmaker")}</span>
             </Button>
