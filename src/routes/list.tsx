@@ -277,16 +277,57 @@ function ListPage() {
                       <td className="px-3 py-1.5 text-muted-foreground tabular-nums">
                         {i + 1}
                       </td>
-                      {columns.map((c) => (
-                        <td key={c} className="px-2 py-1.5">
-                          <Input
-                            value={r[c] || ""}
-                            onChange={(e) => updateCell(i, c, e.target.value)}
-                            className="h-8 border-transparent bg-transparent shadow-none focus-visible:bg-background focus-visible:border-input"
-                            placeholder={c}
-                          />
-                        </td>
-                      ))}
+                      {columns.map((c) => {
+                        const isLink = linkColumns.includes(c);
+                        const cellKey = `${i}:${c}`;
+                        const value = r[c] || "";
+                        const isEditing = editingCell === cellKey;
+                        const looksLikeUrl = /^https?:\/\//i.test(value);
+
+                        if (isLink && value && !isEditing) {
+                          return (
+                            <td key={c} className="px-2 py-1.5">
+                              <div className="flex items-center gap-1.5 h-8">
+                                {looksLikeUrl ? (
+                                  <a
+                                    href={value}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-primary hover:underline truncate max-w-[240px]"
+                                    title={value}
+                                  >
+                                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                    <span className="truncate">{value.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+                                  </a>
+                                ) : (
+                                  <span className="text-muted-foreground italic truncate">{value}</span>
+                                )}
+                                <button
+                                  onClick={() => setEditingCell(cellKey)}
+                                  className="text-muted-foreground hover:text-foreground p-1"
+                                  aria-label="Edit link"
+                                  title="Edit"
+                                >
+                                  <Pencil className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          );
+                        }
+
+                        return (
+                          <td key={c} className="px-2 py-1.5">
+                            <Input
+                              value={value}
+                              onChange={(e) => updateCell(i, c, e.target.value)}
+                              onBlur={() => isEditing && setEditingCell(null)}
+                              autoFocus={isEditing}
+                              className="h-8 border-transparent bg-transparent shadow-none focus-visible:bg-background focus-visible:border-input"
+                              placeholder={isLink ? "https://..." : c}
+                            />
+                          </td>
+                        );
+                      })}
                       <td className="px-2">
                         <button
                           onClick={() => removeRow(i)}
