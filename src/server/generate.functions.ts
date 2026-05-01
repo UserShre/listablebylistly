@@ -14,11 +14,17 @@ export const generateList = createServerFn({ method: "POST" })
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const { listName, columns, count } = data;
+    const { listName, columns, count, linkColumns = [] } = data;
+    const linkSet = new Set(linkColumns.filter((c) => columns.includes(c)));
 
     const properties: Record<string, { type: string; description: string }> = {};
     for (const c of columns) {
-      properties[c] = { type: "string", description: `Value for "${c}"` };
+      properties[c] = linkSet.has(c)
+        ? {
+            type: "string",
+            description: `A direct, valid https:// URL to the official/most-relevant page for "${c}" of this row (e.g. official website, YouTube channel, Wikipedia, store page). Must start with https://. No markdown, no text — just the raw URL.`,
+          }
+        : { type: "string", description: `Value for "${c}"` };
     }
 
     const tool = {
