@@ -102,6 +102,52 @@ export function SiteHeader() {
             ))}
           </nav>
 
+          <Popover>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label={t("theme")}>
+                    <Palette className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+              </TooltipTrigger>
+              <TooltipContent>{t("theme")}</TooltipContent>
+            </Tooltip>
+            <PopoverContent align="end" className="w-64 space-y-4">
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground">{t("theme_mode")}</div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-start"
+                  onClick={toggleMode}
+                >
+                  {mode === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                  {mode === "dark" ? t("theme_light") : t("theme_dark")}
+                </Button>
+              </div>
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground">{t("theme_accent")}</div>
+                <div className="grid grid-cols-4 gap-2">
+                  {(Object.keys(ACCENTS) as Accent[]).map((a) => (
+                    <button
+                      key={a}
+                      onClick={() => setAccent(a)}
+                      aria-label={ACCENTS[a].label}
+                      title={ACCENTS[a].label}
+                      className="relative h-9 w-full rounded-md border border-border/60 transition-transform hover:scale-105"
+                      style={{ backgroundColor: ACCENTS[a].swatch }}
+                    >
+                      {accent === a && (
+                        <Check className="absolute inset-0 m-auto h-4 w-4 text-white drop-shadow" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Tooltip>
