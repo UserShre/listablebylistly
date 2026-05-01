@@ -49,7 +49,7 @@ function ListPage() {
     setGenerating(true);
     try {
       const result = await generateList({
-        data: { listName: listName.trim(), columns, count },
+        data: { listName: listName.trim(), columns, count, linkColumns },
       });
       if (!result.rows.length) {
         toast.error("No rows returned. Try a different list name.");
