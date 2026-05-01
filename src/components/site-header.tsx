@@ -177,7 +177,8 @@ export function SiteHeader() {
               <Button onClick={send}>{t("send")}</Button>
             </DialogFooter>
           </DialogContent>
-        </Dialog>
+          </Dialog>
+        </TooltipProvider>
       </div>
     </header>
   );
