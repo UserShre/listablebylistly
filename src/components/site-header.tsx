@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home } from "lucide-react";
+import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home, Palette, Sun, Moon, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,13 +27,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useI18n, LANG_LABELS, type Lang } from "@/lib/i18n";
+import { useTheme, ACCENTS, type Accent } from "@/lib/theme";
 import { toast } from "sonner";
 
 const FEEDBACK_EMAIL = "feedback@listly.app";
 
 export function SiteHeader() {
   const { t, lang, setLang } = useI18n();
+  const { mode, toggleMode, accent, setAccent } = useTheme();
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("Suggestion");
