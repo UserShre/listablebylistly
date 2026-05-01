@@ -11,10 +11,10 @@ import { SiteHeader } from "@/components/site-header";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/list")({
-  component: Index,
+  component: ListPage,
   head: () => ({
     meta: [
-      { title: "Listable by Listly — Free AI List Maker. Build & Copy Lists Instantly" },
+      { title: "List Maker — Listable by Listly" },
       {
         name: "description",
         content:
