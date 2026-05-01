@@ -5,6 +5,7 @@ const InputSchema = z.object({
   listName: z.string().min(1).max(300),
   columns: z.array(z.string().min(1).max(60)).min(1).max(10),
   count: z.number().int().min(1).max(100),
+  linkColumns: z.array(z.string().min(1).max(60)).max(10).optional(),
 });
 
 export const generateList = createServerFn({ method: "POST" })
@@ -13,11 +14,17 @@ export const generateList = createServerFn({ method: "POST" })
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const { listName, columns, count } = data;
+    const { listName, columns, count, linkColumns = [] } = data;
+    const linkSet = new Set(linkColumns.filter((c) => columns.includes(c)));
 
     const properties: Record<string, { type: string; description: string }> = {};
     for (const c of columns) {
-      properties[c] = { type: "string", description: `Value for "${c}"` };
+      properties[c] = linkSet.has(c)
+        ? {
+            type: "string",
+            description: `A direct, valid https:// URL to the official/most-relevant page for "${c}" of this row (e.g. official website, YouTube channel, Wikipedia, store page). Must start with https://. No markdown, no text — just the raw URL.`,
+          }
+        : { type: "string", description: `Value for "${c}"` };
     }
 
     const tool = {
@@ -56,11 +63,11 @@ export const generateList = createServerFn({ method: "POST" })
           {
             role: "system",
             content:
-              "Generate accurate, factual lists fast. Keep each cell short (1-6 words). Use 'N/A' if unknown. Never invent data.",
+              "Generate accurate, factual lists fast. Keep each cell short (1-6 words). Use 'N/A' if unknown. Never invent data. For URL columns, always return a real, working https:// URL — prefer official sites, then Wikipedia, then well-known platforms. Never return placeholder or example.com URLs.",
           },
           {
             role: "user",
-            content: `List: "${listName}". Return exactly ${count} rows with columns: ${columns.map((c) => `"${c}"`).join(", ")}. Order logically (rank/popularity/date).`,
+            content: `List: "${listName}". Return exactly ${count} rows with columns: ${columns.map((c) => `"${c}"`).join(", ")}.${linkSet.size ? ` These columns must contain real https:// URLs: ${[...linkSet].map((c) => `"${c}"`).join(", ")}.` : ""} Order logically (rank/popularity/date).`,
           },
         ],
         tools: [tool],

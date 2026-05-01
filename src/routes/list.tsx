@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Copy, Check, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Trash2, Copy, Check, Sparkles, Loader2, Link as LinkIcon, ExternalLink, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { generateList } from "@/server/generate.functions";
@@ -30,11 +30,16 @@ function ListPage() {
   const { t } = useI18n();
   const [listName, setListName] = useState("");
   const [columns, setColumns] = useState<string[]>(["name", "value"]);
+  const [linkColumns, setLinkColumns] = useState<string[]>([]);
+  const [editingCell, setEditingCell] = useState<string | null>(null);
   const [newCol, setNewCol] = useState("");
   const [rows, setRows] = useState<Row[]>([{ name: "", value: "" }]);
   const [copied, setCopied] = useState<string | null>(null);
   const [count, setCount] = useState(10);
   const [generating, setGenerating] = useState(false);
+
+  const toggleLinkColumn = (c: string) =>
+    setLinkColumns((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
 
   const handleGenerate = async () => {
     if (!listName.trim()) {
@@ -44,7 +49,7 @@ function ListPage() {
     setGenerating(true);
     try {
       const result = await generateList({
-        data: { listName: listName.trim(), columns, count },
+        data: { listName: listName.trim(), columns, count, linkColumns },
       });
       if (!result.rows.length) {
         toast.error("No rows returned. Try a different list name.");
@@ -70,6 +75,7 @@ function ListPage() {
   const removeColumn = (c: string) => {
     if (columns.length <= 1) return;
     setColumns(columns.filter((x) => x !== c));
+    setLinkColumns((prev) => prev.filter((x) => x !== c));
     setRows(
       rows.map((r) => {
         const { [c]: _, ...rest } = r;
@@ -187,27 +193,47 @@ function ListPage() {
         </Card>
 
         <section className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
             <label className="text-sm font-medium text-muted-foreground">
               {t("columns")}
             </label>
+            <p className="text-xs text-muted-foreground inline-flex items-center gap-1">
+              <LinkIcon className="h-3 w-3" />
+              Tap the link icon on a column to make it a clickable link (AI auto-fills URLs)
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {columns.map((c) => (
-              <span
-                key={c}
-                className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground"
-              >
-                {c}
-                <button
-                  onClick={() => removeColumn(c)}
-                  className="text-muted-foreground hover:text-destructive transition-colors"
-                  aria-label={`Remove ${c}`}
+            {columns.map((c) => {
+              const isLink = linkColumns.includes(c);
+              return (
+                <span
+                  key={c}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+                    isLink
+                      ? "bg-primary/15 text-primary ring-1 ring-primary/30"
+                      : "bg-secondary text-secondary-foreground"
+                  }`}
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </span>
-            ))}
+                  {isLink && <LinkIcon className="h-3.5 w-3.5" />}
+                  {c}
+                  <button
+                    onClick={() => toggleLinkColumn(c)}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={isLink ? `Unmark ${c} as link column` : `Mark ${c} as link column`}
+                    title={isLink ? "Unmark as link column" : "Mark as link column (AI fills with URLs)"}
+                  >
+                    <LinkIcon className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    onClick={() => removeColumn(c)}
+                    className="text-muted-foreground hover:text-destructive transition-colors"
+                    aria-label={`Remove ${c}`}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </span>
+              );
+            })}
             <div className="flex gap-2">
               <Input
                 value={newCol}
@@ -255,16 +281,57 @@ function ListPage() {
                       <td className="px-3 py-1.5 text-muted-foreground tabular-nums">
                         {i + 1}
                       </td>
-                      {columns.map((c) => (
-                        <td key={c} className="px-2 py-1.5">
-                          <Input
-                            value={r[c] || ""}
-                            onChange={(e) => updateCell(i, c, e.target.value)}
-                            className="h-8 border-transparent bg-transparent shadow-none focus-visible:bg-background focus-visible:border-input"
-                            placeholder={c}
-                          />
-                        </td>
-                      ))}
+                      {columns.map((c) => {
+                        const isLink = linkColumns.includes(c);
+                        const cellKey = `${i}:${c}`;
+                        const value = r[c] || "";
+                        const isEditing = editingCell === cellKey;
+                        const looksLikeUrl = /^https?:\/\//i.test(value);
+
+                        if (isLink && value && !isEditing) {
+                          return (
+                            <td key={c} className="px-2 py-1.5">
+                              <div className="flex items-center gap-1.5 h-8">
+                                {looksLikeUrl ? (
+                                  <a
+                                    href={value}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-primary hover:underline truncate max-w-[240px]"
+                                    title={value}
+                                  >
+                                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                    <span className="truncate">{value.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+                                  </a>
+                                ) : (
+                                  <span className="text-muted-foreground italic truncate">{value}</span>
+                                )}
+                                <button
+                                  onClick={() => setEditingCell(cellKey)}
+                                  className="text-muted-foreground hover:text-foreground p-1"
+                                  aria-label="Edit link"
+                                  title="Edit"
+                                >
+                                  <Pencil className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          );
+                        }
+
+                        return (
+                          <td key={c} className="px-2 py-1.5">
+                            <Input
+                              value={value}
+                              onChange={(e) => updateCell(i, c, e.target.value)}
+                              onBlur={() => isEditing && setEditingCell(null)}
+                              autoFocus={isEditing}
+                              className="h-8 border-transparent bg-transparent shadow-none focus-visible:bg-background focus-visible:border-input"
+                              placeholder={isLink ? "https://..." : c}
+                            />
+                          </td>
+                        );
+                      })}
                       <td className="px-2">
                         <button
                           onClick={() => removeRow(i)}
