@@ -10,7 +10,7 @@ import { generateList } from "@/server/generate.functions";
 import { SiteHeader } from "@/components/site-header";
 import { useI18n } from "@/lib/i18n";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/list")({
   component: Index,
   head: () => ({
     meta: [
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
 
 type Row = Record<string, string>;
 
-function Index() {
+function ListPage() {
   const { t } = useI18n();
   const [listName, setListName] = useState("");
   const [columns, setColumns] = useState<string[]>(["name", "value"]);
