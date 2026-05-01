@@ -75,6 +75,7 @@ function ListPage() {
   const removeColumn = (c: string) => {
     if (columns.length <= 1) return;
     setColumns(columns.filter((x) => x !== c));
+    setLinkColumns((prev) => prev.filter((x) => x !== c));
     setRows(
       rows.map((r) => {
         const { [c]: _, ...rest } = r;
