@@ -199,21 +199,37 @@ function ListPage() {
             </label>
           </div>
           <div className="flex flex-wrap gap-2">
-            {columns.map((c) => (
-              <span
-                key={c}
-                className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground"
-              >
-                {c}
-                <button
-                  onClick={() => removeColumn(c)}
-                  className="text-muted-foreground hover:text-destructive transition-colors"
-                  aria-label={`Remove ${c}`}
+            {columns.map((c) => {
+              const isLink = linkColumns.includes(c);
+              return (
+                <span
+                  key={c}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+                    isLink
+                      ? "bg-primary/15 text-primary ring-1 ring-primary/30"
+                      : "bg-secondary text-secondary-foreground"
+                  }`}
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </span>
-            ))}
+                  {isLink && <LinkIcon className="h-3.5 w-3.5" />}
+                  {c}
+                  <button
+                    onClick={() => toggleLinkColumn(c)}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={isLink ? `Unmark ${c} as link column` : `Mark ${c} as link column`}
+                    title={isLink ? "Unmark as link column" : "Mark as link column (AI fills with URLs)"}
+                  >
+                    <LinkIcon className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    onClick={() => removeColumn(c)}
+                    className="text-muted-foreground hover:text-destructive transition-colors"
+                    aria-label={`Remove ${c}`}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </span>
+              );
+            })}
             <div className="flex gap-2">
               <Input
                 value={newCol}
