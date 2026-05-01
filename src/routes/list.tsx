@@ -30,11 +30,16 @@ function ListPage() {
   const { t } = useI18n();
   const [listName, setListName] = useState("");
   const [columns, setColumns] = useState<string[]>(["name", "value"]);
+  const [linkColumns, setLinkColumns] = useState<string[]>([]);
+  const [editingCell, setEditingCell] = useState<string | null>(null);
   const [newCol, setNewCol] = useState("");
   const [rows, setRows] = useState<Row[]>([{ name: "", value: "" }]);
   const [copied, setCopied] = useState<string | null>(null);
   const [count, setCount] = useState(10);
   const [generating, setGenerating] = useState(false);
+
+  const toggleLinkColumn = (c: string) =>
+    setLinkColumns((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
 
   const handleGenerate = async () => {
     if (!listName.trim()) {
