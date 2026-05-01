@@ -5,6 +5,7 @@ const InputSchema = z.object({
   listName: z.string().min(1).max(300),
   columns: z.array(z.string().min(1).max(60)).min(1).max(10),
   count: z.number().int().min(1).max(100),
+  linkColumns: z.array(z.string().min(1).max(60)).max(10).optional(),
 });
 
 export const generateList = createServerFn({ method: "POST" })
