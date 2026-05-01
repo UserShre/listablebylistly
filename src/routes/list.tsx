@@ -193,10 +193,14 @@ function ListPage() {
         </Card>
 
         <section className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
             <label className="text-sm font-medium text-muted-foreground">
               {t("columns")}
             </label>
+            <p className="text-xs text-muted-foreground inline-flex items-center gap-1">
+              <LinkIcon className="h-3 w-3" />
+              Tap the link icon on a column to make it a clickable link (AI auto-fills URLs)
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
             {columns.map((c) => {
