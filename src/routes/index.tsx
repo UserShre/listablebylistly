@@ -105,6 +105,11 @@ function Home() {
           ))}
         </section>
 
+        <section className="rounded-xl border border-border/60 bg-card/40 px-5 py-4 text-sm text-muted-foreground text-center">
+          <span className="sm:hidden">{t("note_mobile")}</span>
+          <span className="hidden sm:inline">{t("note_desktop")}</span>
+        </section>
+
         <footer className="pt-6 pb-4 text-center text-xs text-muted-foreground">
           {t("footer")}
         </footer>
