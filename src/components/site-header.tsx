@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home, Palette, Sun, Moon, Check } from "lucide-react";
+import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home, Palette, Sun, Moon, Check, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -84,6 +84,7 @@ export function SiteHeader() {
               { to: "/summarize" as const, icon: FileText, label: t("summarizer") },
               { to: "/describe" as const, icon: PenLine, label: t("describer") },
               { to: "/code" as const, icon: Code2, label: t("coder") },
+              { to: "/edit" as const, icon: Wand2, label: t("editor") },
             ].map(({ to, icon: Icon, label }) => (
               <Tooltip key={to}>
                 <TooltipTrigger asChild>

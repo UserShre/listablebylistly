@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ListPlus, FileText, PenLine, Code2, Sparkles, ArrowRight } from "lucide-react";
+import { ListPlus, FileText, PenLine, Code2, Sparkles, ArrowRight, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
@@ -46,6 +46,12 @@ function Home() {
       icon: Code2,
       title: t("coder"),
       desc: t("home_coder_desc"),
+    },
+    {
+      to: "/edit" as const,
+      icon: Wand2,
+      title: t("editor"),
+      desc: t("home_editor_desc"),
     },
   ];
 
