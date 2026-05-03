@@ -1,7 +1,7 @@
 // Google AdSense Configuration
 export const AD_NETWORKS = {
   googleAdSense: {
-    publisherId: 'ca-pub-YOUR_PUBLISHER_ID', // Replace with your Google AdSense ID
+    publisherId: 'ca-pub-1207458044982701',
     enabled: true,
   },
 };
@@ -9,7 +9,7 @@ export const AD_NETWORKS = {
 export const AD_SLOTS = {
   // Hero Banner - Top of page (728x90 or 970x90)
   heroBanner: {
-    slotId: 'ad-hero-banner',
+    slotId: '6601970930',
     width: 970,
     height: 90,
     format: 'horizontal',
@@ -19,7 +19,7 @@ export const AD_SLOTS = {
   },
   // Sidebar Premium - High visibility (300x250)
   sidebarPremium: {
-    slotId: 'ad-sidebar-premium',
+    slotId: '2009877398',
     width: 300,
     height: 250,
     format: 'rectangle',
@@ -29,7 +29,7 @@ export const AD_SLOTS = {
   },
   // In-Content Native Ad
   inContentNative: {
-    slotId: 'ad-in-content',
+    slotId: '1359140704',
     width: 728,
     height: 90,
     format: 'native',
@@ -39,7 +39,7 @@ export const AD_SLOTS = {
   },
   // Footer Leaderboard - Last impression (728x90)
   footerLeaderboard: {
-    slotId: 'ad-footer-leaderboard',
+    slotId: '9046059037',
     width: 728,
     height: 90,
     format: 'horizontal',

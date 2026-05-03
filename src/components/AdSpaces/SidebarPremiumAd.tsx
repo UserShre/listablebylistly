@@ -6,7 +6,7 @@ export const SidebarPremiumAd = () => {
     if (window.adsbygoogle === undefined) {
       const script = document.createElement('script');
       script.async = true;
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1207458044982701';
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
     }
@@ -25,8 +25,8 @@ export const SidebarPremiumAd = () => {
             width: '300px',
             height: '250px',
           }}
-          data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
-          data-ad-slot="ad-sidebar-premium"
+          data-ad-client="ca-pub-1207458044982701"
+          data-ad-slot="2009877398"
           data-ad-format="rectangle"
         />
       </div>

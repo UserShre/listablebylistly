@@ -10,7 +10,7 @@ export const InContentNativeAd = ({ placement = 'after-section' }: InContentNati
     if (window.adsbygoogle === undefined) {
       const script = document.createElement('script');
       script.async = true;
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1207458044982701';
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
     }
@@ -29,8 +29,8 @@ export const InContentNativeAd = ({ placement = 'after-section' }: InContentNati
           maxWidth: '728px',
           height: '90px',
         }}
-        data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
-        data-ad-slot="ad-in-content"
+        data-ad-client="ca-pub-1207458044982701"
+        data-ad-slot="1359140704"
         data-ad-format="horizontal"
       />
     </div>
