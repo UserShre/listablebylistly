@@ -1,6 +1,19 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { ListPlus, FileText, MessageSquare, Languages, PenLine, Code2, Home, Palette, Sun, Moon, Check, Wand2 } from "lucide-react";
+import {
+  ListPlus,
+  FileText,
+  MessageSquare,
+  Languages,
+  PenLine,
+  Code2,
+  Home,
+  Palette,
+  Sun,
+  Moon,
+  Check,
+  Wand2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -70,7 +83,8 @@ export function SiteHeader() {
           </div>
           <div className="min-w-0">
             <h1 className="text-base sm:text-lg font-semibold tracking-tight truncate">
-              Listable <span className="text-muted-foreground font-normal hidden sm:inline">by Listly</span>
+              Listable{" "}
+              <span className="text-muted-foreground font-normal hidden sm:inline">by Listly</span>
             </h1>
             <p className="text-xs text-muted-foreground hidden sm:block">{t("tagline")}</p>
           </div>
@@ -158,7 +172,9 @@ export function SiteHeader() {
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent>{t("language")} ({lang.toUpperCase()})</TooltipContent>
+              <TooltipContent>
+                {t("language")} ({lang.toUpperCase()})
+              </TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
               {(Object.keys(LANG_LABELS) as Lang[]).map((l) => (
@@ -177,57 +193,66 @@ export function SiteHeader() {
             <DialogTrigger asChild>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon" aria-label={t("feedback")} className="sm:hidden">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    aria-label={t("feedback")}
+                    className="sm:hidden"
+                  >
                     <MessageSquare className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{t("feedback")}</TooltipContent>
               </Tooltip>
             </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{t("feedback_title")}</DialogTitle>
-              <DialogDescription>
-                We read every message. Choose a type and tell us what's on your mind.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-3">
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium">{t("feedback_type")}</label>
-                <Select value={type} onValueChange={setType}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Suggestion">{t("type_suggestion")}</SelectItem>
-                    <SelectItem value="Complaint">{t("type_complaint")}</SelectItem>
-                    <SelectItem value="Feedback">{t("type_feedback")}</SelectItem>
-                    <SelectItem value="Help">{t("type_help")}</SelectItem>
-                  </SelectContent>
-                </Select>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{t("feedback_title")}</DialogTitle>
+                <DialogDescription>
+                  We read every message. Choose a type and tell us what's on your mind.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium">{t("feedback_type")}</label>
+                  <Select value={type} onValueChange={setType}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Suggestion">{t("type_suggestion")}</SelectItem>
+                      <SelectItem value="Complaint">{t("type_complaint")}</SelectItem>
+                      <SelectItem value="Feedback">{t("type_feedback")}</SelectItem>
+                      <SelectItem value="Help">{t("type_help")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium">{t("your_message")}</label>
+                  <Textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={5}
+                    placeholder="…"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium">{t("your_email")}</label>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                  />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium">{t("your_message")}</label>
-                <Textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={5}
-                  placeholder="…"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium">{t("your_email")}</label>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="ghost" onClick={() => setOpen(false)}>{t("cancel")}</Button>
-              <Button onClick={send}>{t("send")}</Button>
-            </DialogFooter>
-          </DialogContent>
+              <DialogFooter>
+                <Button variant="ghost" onClick={() => setOpen(false)}>
+                  {t("cancel")}
+                </Button>
+                <Button onClick={send}>{t("send")}</Button>
+              </DialogFooter>
+            </DialogContent>
           </Dialog>
         </TooltipProvider>
       </div>
