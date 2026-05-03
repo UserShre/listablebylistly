@@ -68,10 +68,19 @@ function EditPage() {
       toast.error(t("edit_need_text"));
       return;
     }
+    let effectiveInstruction = instruction;
+    if (action === "translate") {
+      const target = window.prompt(
+        t("edit_translate_prompt"),
+        instruction || "English",
+      );
+      if (!target) return;
+      effectiveInstruction = `Translate into ${target}. ${instruction}`.trim();
+    }
     setBusy(action);
     try {
       const result = await editText({
-        data: { text, action, instruction, lang },
+        data: { text, action, instruction: effectiveInstruction, lang },
       });
       setHistory((h) => [...h, text]);
       setText(result.text);
