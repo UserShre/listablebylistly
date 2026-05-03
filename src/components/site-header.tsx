@@ -150,16 +150,16 @@ export function SiteHeader() {
           </Popover>
 
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Tooltip>
-                <TooltipTrigger asChild>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" aria-label={t("language")}>
                     <Languages className="h-4 w-4" />
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent>{t("language")} ({lang.toUpperCase()})</TooltipContent>
-              </Tooltip>
-            </DropdownMenuTrigger>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
+              <TooltipContent>{t("language")} ({lang.toUpperCase()})</TooltipContent>
+            </Tooltip>
             <DropdownMenuContent align="end">
               {(Object.keys(LANG_LABELS) as Lang[]).map((l) => (
                 <DropdownMenuItem
