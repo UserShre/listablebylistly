@@ -177,7 +177,7 @@ export function SiteHeader() {
             <DialogTrigger asChild>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon" aria-label={t("feedback")}>
+                  <Button variant="outline" size="icon" aria-label={t("feedback")} className="sm:hidden">
                     <MessageSquare className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
