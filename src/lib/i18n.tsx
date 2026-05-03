@@ -42,7 +42,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "Continue",
     edit_undo: "Undo",
     edit_done: "Updated",
-    edit_need_text: "Add some text first, or use Create.",
+    edit_need_text: "Add some text first, or use Create."
+    edit_translate_prompt: "Translate into which language?",,
     note_mobile: "On mobile, your feedback really reaches us — tap the message icon and your email app does the rest.",
     note_desktop: "For the best overall experience, open Listable on a computer — bigger canvas, full keyboard shortcuts, smoother editing, Feedbacks and suggestions only in mobile.",
     theme: "Theme",
@@ -167,7 +168,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "Continuar",
     edit_undo: "Deshacer",
     edit_done: "Actualizado",
-    edit_need_text: "Añade texto primero o usa Crear.",
+    edit_need_text: "Añade texto primero o usa Crear."
+    edit_translate_prompt: "¿A qué idioma traducir?",,
     note_mobile: "En el móvil, tus comentarios sí nos llegan — toca el icono de mensaje y tu app de correo hace el resto.",
     note_desktop: "Para la mejor experiencia, abre Listable en un ordenador — más espacio, atajos de teclado, edición fluida, Feedbacks y sugerencias solo en el móvil.",
     theme: "Tema",
@@ -292,7 +294,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "Continuer",
     edit_undo: "Annuler",
     edit_done: "Mis à jour",
-    edit_need_text: "Ajoutez du texte ou utilisez Créer.",
+    edit_need_text: "Ajoutez du texte ou utilisez Créer."
+    edit_translate_prompt: "Traduire dans quelle langue ?",,
     note_mobile: "Sur mobile, vos retours nous parviennent vraiment — touchez l'icône message et votre app mail s'occupe du reste.",
     note_desktop: "Pour la meilleure expérience, ouvrez Listable sur ordinateur — plus d'espace, raccourcis clavier, édition fluide, Feedbacks et suggestions uniquement sur mobile.",
     theme: "Thème",
@@ -417,7 +420,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "إكمال",
     edit_undo: "تراجع",
     edit_done: "تم التحديث",
-    edit_need_text: "أضف نصاً أولاً أو استخدم إنشاء.",
+    edit_need_text: "أضف نصاً أولاً أو استخدم إنشاء."
+    edit_translate_prompt: "إلى أي لغة تريد الترجمة؟",,
     note_mobile: "على الجوال، ملاحظاتك تصلنا فعلاً — اضغط على أيقونة الرسالة ويتكفل تطبيق البريد بالباقي.",
     note_desktop: "للحصول على أفضل تجربة، افتح Listable على الكمبيوتر — مساحة أكبر، اختصارات لوحة المفاتيح، تحرير أكثر سلاسة، الملاحظات والاقتراحات فقط على الجوال.",
     theme: "السمة",
@@ -542,7 +546,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "Fortsetzen",
     edit_undo: "Rückgängig",
     edit_done: "Aktualisiert",
-    edit_need_text: "Füge zuerst Text hinzu oder nutze Erstellen.",
+    edit_need_text: "Füge zuerst Text hinzu oder nutze Erstellen."
+    edit_translate_prompt: "In welche Sprache übersetzen?",,
     note_mobile: "Auf dem Handy erreicht uns dein Feedback wirklich — tippe auf das Nachrichtensymbol, deine Mail-App erledigt den Rest.",
     note_desktop: "Für das beste Erlebnis öffne Listable am Computer — mehr Platz, Tastaturkürzel, flüssigere Bearbeitung, Feedbacks und Vorschläge nur auf dem Handy.",
     theme: "Theme",
@@ -667,7 +672,8 @@ const translations: Record<Lang, Dict> = {
     act_continue: "Continuar",
     edit_undo: "Desfazer",
     edit_done: "Atualizado",
-    edit_need_text: "Adicione texto primeiro ou use Criar.",
+    edit_need_text: "Adicione texto primeiro ou use Criar."
+    edit_translate_prompt: "Traduzir para qual idioma?",,
     note_mobile: "No celular, seu feedback realmente chega até nós — toque no ícone de mensagem e seu app de e-mail faz o resto.",
     note_desktop: "Para a melhor experiência, abra o Listable no computador — mais espaço, atalhos de teclado, edição mais fluida, Feedbacks e sugestões apenas no celular.",
     theme: "Tema",
