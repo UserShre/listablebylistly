@@ -63,16 +63,16 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-border/60 bg-card/50 backdrop-blur sticky top-0 z-10">
-      <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-3">
-        <Link to="/" className="flex items-center gap-3 mr-auto">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+      <div className="mx-auto max-w-5xl px-3 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center gap-2 sm:gap-3">
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 mr-auto min-w-0">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <ListPlus className="h-5 w-5" />
           </div>
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight">
-              Listable <span className="text-muted-foreground font-normal">by Listly</span>
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-lg font-semibold tracking-tight truncate">
+              Listable <span className="text-muted-foreground font-normal hidden sm:inline">by Listly</span>
             </h1>
-            <p className="text-xs text-muted-foreground">{t("tagline")}</p>
+            <p className="text-xs text-muted-foreground hidden sm:block">{t("tagline")}</p>
           </div>
         </Link>
 
