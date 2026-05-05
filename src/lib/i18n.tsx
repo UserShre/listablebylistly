@@ -1,6 +1,13 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-export type Lang = "en" | "es" | "fr" | "ar" | "de" | "pt";
+export type Lang =
+  | "en" | "es" | "fr" | "ar" | "de" | "pt"
+  | "it" | "nl" | "pl" | "ru" | "uk" | "tr" | "sv" | "no" | "da" | "fi"
+  | "cs" | "el" | "ro" | "hu" | "bg" | "sk" | "hr" | "sr" | "he" | "fa"
+  | "ur" | "hi" | "bn" | "ta" | "te" | "ml" | "mr" | "pa" | "gu"
+  | "zh" | "ja" | "ko" | "vi" | "th" | "id" | "ms" | "tl" | "sw"
+  | "af" | "ca" | "eu" | "gl" | "is" | "ga" | "cy" | "lt" | "lv" | "et"
+  | "sl" | "mk" | "sq" | "az" | "kk" | "uz" | "hy" | "ka" | "am";
 
 type Dict = Record<string, string>;
 
