@@ -135,7 +135,7 @@ export function SiteHeader() {
                 {t("language")} ({lang.toUpperCase()})
               </TooltipContent>
             </Tooltip>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="max-h-80 overflow-y-auto">
               {(Object.keys(LANG_LABELS) as Lang[]).map((l) => (
                 <DropdownMenuItem
                   key={l}

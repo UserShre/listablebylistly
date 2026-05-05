@@ -1,10 +1,17 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-export type Lang = "en" | "es" | "fr" | "ar" | "de" | "pt";
+export type Lang =
+  | "en" | "es" | "fr" | "ar" | "de" | "pt"
+  | "it" | "nl" | "pl" | "ru" | "uk" | "tr" | "sv" | "no" | "da" | "fi"
+  | "cs" | "el" | "ro" | "hu" | "bg" | "sk" | "hr" | "sr" | "he" | "fa"
+  | "ur" | "hi" | "bn" | "ta" | "te" | "ml" | "mr" | "pa" | "gu"
+  | "zh" | "ja" | "ko" | "vi" | "th" | "id" | "ms" | "tl" | "sw"
+  | "af" | "ca" | "eu" | "gl" | "is" | "ga" | "cy" | "lt" | "lv" | "et"
+  | "sl" | "mk" | "sq" | "az" | "kk" | "uz" | "hy" | "ka" | "am";
 
 type Dict = Record<string, string>;
 
-const translations: Record<Lang, Dict> = {
+const translations: Partial<Record<Lang, Dict>> = {
   en: {
     tagline: "Lists made lovable, texts made easier.",
     list_name: "List name",
@@ -764,29 +771,55 @@ const translations: Record<Lang, Dict> = {
 };
 
 export const LANG_LABELS: Record<Lang, string> = {
-  en: "English",
-  es: "Español",
-  fr: "Français",
-  ar: "العربية",
-  de: "Deutsch",
-  pt: "Português",
+  en: "English", es: "Español", fr: "Français", ar: "العربية", de: "Deutsch", pt: "Português",
+  it: "Italiano", nl: "Nederlands", pl: "Polski", ru: "Русский", uk: "Українська",
+  tr: "Türkçe", sv: "Svenska", no: "Norsk", da: "Dansk", fi: "Suomi",
+  cs: "Čeština", el: "Ελληνικά", ro: "Română", hu: "Magyar", bg: "Български",
+  sk: "Slovenčina", hr: "Hrvatski", sr: "Српски", he: "עברית", fa: "فارسی",
+  ur: "اردو", hi: "हिन्दी", bn: "বাংলা", ta: "தமிழ்", te: "తెలుగు",
+  ml: "മലയാളം", mr: "मराठी", pa: "ਪੰਜਾਬੀ", gu: "ગુજરાતી",
+  zh: "中文", ja: "日本語", ko: "한국어", vi: "Tiếng Việt", th: "ไทย",
+  id: "Bahasa Indonesia", ms: "Bahasa Melayu", tl: "Tagalog", sw: "Kiswahili",
+  af: "Afrikaans", ca: "Català", eu: "Euskara", gl: "Galego", is: "Íslenska",
+  ga: "Gaeilge", cy: "Cymraeg", lt: "Lietuvių", lv: "Latviešu", et: "Eesti",
+  sl: "Slovenščina", mk: "Македонски", sq: "Shqip", az: "Azərbaycan",
+  kk: "Қазақша", uz: "Oʻzbekcha", hy: "Հայերեն", ka: "ქართული", am: "አማርኛ",
 };
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 const I18nContext = createContext<Ctx | null>(null);
+
+const RTL_LANGS: Lang[] = ["ar", "he", "fa", "ur"];
+
+function detectBrowserLang(): Lang {
+  if (typeof navigator === "undefined") return "en";
+  const candidates = [
+    ...(navigator.languages ?? []),
+    navigator.language,
+  ].filter(Boolean) as string[];
+  for (const raw of candidates) {
+    const code = raw.toLowerCase().split(/[-_]/)[0] as Lang;
+    if ((LANG_LABELS as Record<string, string>)[code]) return code;
+  }
+  return "en";
+}
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     const saved = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null;
-    if (saved && translations[saved]) setLangState(saved);
+    if (saved && (LANG_LABELS as Record<string, string>)[saved]) {
+      setLangState(saved);
+    } else {
+      setLangState(detectBrowserLang());
+    }
   }, []);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = lang;
-      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.documentElement.dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
     }
   }, [lang]);
 
@@ -795,7 +828,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") localStorage.setItem("lang", l);
   };
 
-  const t = (k: string) => translations[lang][k] ?? translations.en[k] ?? k;
+  const en = translations.en ?? {};
+  const t = (k: string) => (translations[lang]?.[k] ?? en[k] ?? k);
+
 
   return <I18nContext.Provider value={{ lang, setLang, t }}>{children}</I18nContext.Provider>;
 }
