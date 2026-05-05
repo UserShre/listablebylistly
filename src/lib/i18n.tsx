@@ -11,7 +11,7 @@ export type Lang =
 
 type Dict = Record<string, string>;
 
-const translations: Record<Lang, Dict> = {
+const translations: Partial<Record<Lang, Dict>> = {
   en: {
     tagline: "Lists made lovable, texts made easier.",
     list_name: "List name",
