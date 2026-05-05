@@ -11,6 +11,7 @@ import {
   Check,
   Wand2,
   FileText,
+  Braces,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
