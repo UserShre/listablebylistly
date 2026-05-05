@@ -1,9 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   ListPlus,
-  FileText,
-  MessageSquare,
   Languages,
   PenLine,
   Code2,
@@ -13,66 +10,26 @@ import {
   Moon,
   Check,
   Wand2,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useI18n, LANG_LABELS, type Lang } from "@/lib/i18n";
 import { useTheme, ACCENTS, type Accent } from "@/lib/theme";
-import { toast } from "sonner";
-
-const FEEDBACK_EMAIL = "feedback@listly.app";
 
 export function SiteHeader() {
   const { t, lang, setLang } = useI18n();
   const { mode, toggleMode, accent, setAccent } = useTheme();
   const location = useLocation();
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState("Suggestion");
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
 
   const isActive = (p: string) => location.pathname === p;
-
-  const send = () => {
-    if (!message.trim()) {
-      toast.error("Please write a message");
-      return;
-    }
-    const subject = encodeURIComponent(`[Listable] ${type}`);
-    const body = encodeURIComponent(
-      `${message}\n\n—\nFrom: ${email || "anonymous"}\nLang: ${lang}\nPage: ${location.pathname}`,
-    );
-    window.location.href = `mailto:${FEEDBACK_EMAIL}?subject=${subject}&body=${body}`;
-    setOpen(false);
-    setMessage("");
-    setEmail("");
-    toast.success("Opening your email app…");
-  };
 
   return (
     <header className="border-b border-border/60 bg-card/50 backdrop-blur sticky top-0 z-10">
@@ -189,71 +146,6 @@ export function SiteHeader() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    aria-label={t("feedback")}
-                    className="sm:hidden"
-                  >
-                    <MessageSquare className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>{t("feedback")}</TooltipContent>
-              </Tooltip>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{t("feedback_title")}</DialogTitle>
-                <DialogDescription>
-                  We read every message. Choose a type and tell us what's on your mind.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="space-y-3">
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium">{t("feedback_type")}</label>
-                  <Select value={type} onValueChange={setType}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Suggestion">{t("type_suggestion")}</SelectItem>
-                      <SelectItem value="Complaint">{t("type_complaint")}</SelectItem>
-                      <SelectItem value="Feedback">{t("type_feedback")}</SelectItem>
-                      <SelectItem value="Help">{t("type_help")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium">{t("your_message")}</label>
-                  <Textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={5}
-                    placeholder="…"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium">{t("your_email")}</label>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button variant="ghost" onClick={() => setOpen(false)}>
-                  {t("cancel")}
-                </Button>
-                <Button onClick={send}>{t("send")}</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
         </TooltipProvider>
       </div>
     </header>
