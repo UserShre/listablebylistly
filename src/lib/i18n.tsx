@@ -771,12 +771,19 @@ const translations: Partial<Record<Lang, Dict>> = {
 };
 
 export const LANG_LABELS: Record<Lang, string> = {
-  en: "English",
-  es: "Español",
-  fr: "Français",
-  ar: "العربية",
-  de: "Deutsch",
-  pt: "Português",
+  en: "English", es: "Español", fr: "Français", ar: "العربية", de: "Deutsch", pt: "Português",
+  it: "Italiano", nl: "Nederlands", pl: "Polski", ru: "Русский", uk: "Українська",
+  tr: "Türkçe", sv: "Svenska", no: "Norsk", da: "Dansk", fi: "Suomi",
+  cs: "Čeština", el: "Ελληνικά", ro: "Română", hu: "Magyar", bg: "Български",
+  sk: "Slovenčina", hr: "Hrvatski", sr: "Српски", he: "עברית", fa: "فارسی",
+  ur: "اردو", hi: "हिन्दी", bn: "বাংলা", ta: "தமிழ்", te: "తెలుగు",
+  ml: "മലയാളം", mr: "मराठी", pa: "ਪੰਜਾਬੀ", gu: "ગુજરાતી",
+  zh: "中文", ja: "日本語", ko: "한국어", vi: "Tiếng Việt", th: "ไทย",
+  id: "Bahasa Indonesia", ms: "Bahasa Melayu", tl: "Tagalog", sw: "Kiswahili",
+  af: "Afrikaans", ca: "Català", eu: "Euskara", gl: "Galego", is: "Íslenska",
+  ga: "Gaeilge", cy: "Cymraeg", lt: "Lietuvių", lv: "Latviešu", et: "Eesti",
+  sl: "Slovenščina", mk: "Македонски", sq: "Shqip", az: "Azərbaycan",
+  kk: "Қазақша", uz: "Oʻzbekcha", hy: "Հայերեն", ka: "ქართული", am: "አማርኛ",
 };
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
