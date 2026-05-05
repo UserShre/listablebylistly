@@ -789,18 +789,37 @@ export const LANG_LABELS: Record<Lang, string> = {
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 const I18nContext = createContext<Ctx | null>(null);
 
+const RTL_LANGS: Lang[] = ["ar", "he", "fa", "ur"];
+
+function detectBrowserLang(): Lang {
+  if (typeof navigator === "undefined") return "en";
+  const candidates = [
+    ...(navigator.languages ?? []),
+    navigator.language,
+  ].filter(Boolean) as string[];
+  for (const raw of candidates) {
+    const code = raw.toLowerCase().split(/[-_]/)[0] as Lang;
+    if ((LANG_LABELS as Record<string, string>)[code]) return code;
+  }
+  return "en";
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     const saved = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null;
-    if (saved && translations[saved]) setLangState(saved);
+    if (saved && (LANG_LABELS as Record<string, string>)[saved]) {
+      setLangState(saved);
+    } else {
+      setLangState(detectBrowserLang());
+    }
   }, []);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = lang;
-      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.documentElement.dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
     }
   }, [lang]);
 
@@ -809,7 +828,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") localStorage.setItem("lang", l);
   };
 
-  const t = (k: string) => translations[lang][k] ?? translations.en[k] ?? k;
+  const en = translations.en ?? {};
+  const t = (k: string) => (translations[lang]?.[k] ?? en[k] ?? k);
+
 
   return <I18nContext.Provider value={{ lang, setLang, t }}>{children}</I18nContext.Provider>;
 }
