@@ -11,6 +11,7 @@ import {
   Check,
   Wand2,
   FileText,
+  Braces,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,6 +57,7 @@ export function SiteHeader() {
               { to: "/describe" as const, icon: PenLine, label: t("describer") },
               { to: "/code" as const, icon: Code2, label: t("coder") },
               { to: "/edit" as const, icon: Wand2, label: t("editor") },
+              { to: "/code-editor" as const, icon: Braces, label: "Code Editor" },
             ].map(({ to, icon: Icon, label }) => (
               <Tooltip key={to}>
                 <TooltipTrigger asChild>

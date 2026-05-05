@@ -13,6 +13,7 @@ import { Route as SummarizeRouteImport } from './routes/summarize'
 import { Route as ListRouteImport } from './routes/list'
 import { Route as EditRouteImport } from './routes/edit'
 import { Route as DescribeRouteImport } from './routes/describe'
+import { Route as CodeEditorRouteImport } from './routes/code-editor'
 import { Route as CodeRouteImport } from './routes/code'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const DescribeRoute = DescribeRouteImport.update({
   path: '/describe',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CodeEditorRoute = CodeEditorRouteImport.update({
+  id: '/code-editor',
+  path: '/code-editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CodeRoute = CodeRouteImport.update({
   id: '/code',
   path: '/code',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
+  '/code-editor': typeof CodeEditorRoute
   '/describe': typeof DescribeRoute
   '/edit': typeof EditRoute
   '/list': typeof ListRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
+  '/code-editor': typeof CodeEditorRoute
   '/describe': typeof DescribeRoute
   '/edit': typeof EditRoute
   '/list': typeof ListRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/code': typeof CodeRoute
+  '/code-editor': typeof CodeEditorRoute
   '/describe': typeof DescribeRoute
   '/edit': typeof EditRoute
   '/list': typeof ListRoute
@@ -74,13 +83,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/code' | '/describe' | '/edit' | '/list' | '/summarize'
+  fullPaths:
+    | '/'
+    | '/code'
+    | '/code-editor'
+    | '/describe'
+    | '/edit'
+    | '/list'
+    | '/summarize'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/code' | '/describe' | '/edit' | '/list' | '/summarize'
+  to:
+    | '/'
+    | '/code'
+    | '/code-editor'
+    | '/describe'
+    | '/edit'
+    | '/list'
+    | '/summarize'
   id:
     | '__root__'
     | '/'
     | '/code'
+    | '/code-editor'
     | '/describe'
     | '/edit'
     | '/list'
@@ -90,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CodeRoute: typeof CodeRoute
+  CodeEditorRoute: typeof CodeEditorRoute
   DescribeRoute: typeof DescribeRoute
   EditRoute: typeof EditRoute
   ListRoute: typeof ListRoute
@@ -126,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DescribeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/code-editor': {
+      id: '/code-editor'
+      path: '/code-editor'
+      fullPath: '/code-editor'
+      preLoaderRoute: typeof CodeEditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/code': {
       id: '/code'
       path: '/code'
@@ -146,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CodeRoute: CodeRoute,
+  CodeEditorRoute: CodeEditorRoute,
   DescribeRoute: DescribeRoute,
   EditRoute: EditRoute,
   ListRoute: ListRoute,
