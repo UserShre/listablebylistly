@@ -212,6 +212,7 @@ function ListPage() {
           <div className="flex flex-wrap gap-2">
             {columns.map((c) => {
               const isLink = linkColumns.includes(c);
+              const mode = linkDisplay[c] ?? "url";
               return (
                 <span
                   key={c}
@@ -223,6 +224,24 @@ function ListPage() {
                 >
                   {isLink && <LinkIcon className="h-3.5 w-3.5" />}
                   {c}
+                  {isLink && (
+                    <span className="inline-flex rounded-full bg-background/60 ring-1 ring-primary/20 overflow-hidden text-[11px]">
+                      <button
+                        onClick={() => setDisplayMode(c, "url")}
+                        className={`px-2 py-0.5 ${mode === "url" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                        title="Show full URL"
+                      >
+                        link
+                      </button>
+                      <button
+                        onClick={() => setDisplayMode(c, "name")}
+                        className={`px-2 py-0.5 ${mode === "name" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                        title={`Show ${labelColumnFor(c)} as a clickable link`}
+                      >
+                        name
+                      </button>
+                    </span>
+                  )}
                   <button
                     onClick={() => toggleLinkColumn(c)}
                     className="text-muted-foreground hover:text-primary transition-colors"
