@@ -132,10 +132,10 @@ function EditPage() {
 
       <main className="mx-auto max-w-5xl px-6 py-10 space-y-6">
         <header className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight flex items-center gap-2">
+          <div className="text-3xl font-semibold tracking-tight flex items-center gap-2">
             <PenLine className="h-7 w-7 text-primary" />
             {t("edit_title")}
-          </h1>
+          </div>
           <p className="text-muted-foreground">{t("edit_sub")}</p>
         </header>
 
