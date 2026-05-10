@@ -40,10 +40,10 @@ export function SiteHeader() {
             <ListPlus className="h-5 w-5" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-base sm:text-lg font-semibold tracking-tight truncate">
+            <div className="text-base sm:text-lg font-semibold tracking-tight truncate">
               Listable{" "}
               <span className="text-muted-foreground font-normal hidden sm:inline">by Listly</span>
-            </h1>
+            </div>
             <p className="text-xs text-muted-foreground hidden sm:block">{t("tagline")}</p>
           </div>
         </Link>

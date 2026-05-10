@@ -31,6 +31,7 @@ function ListPage() {
   const [listName, setListName] = useState("");
   const [columns, setColumns] = useState<string[]>(["name", "value"]);
   const [linkColumns, setLinkColumns] = useState<string[]>([]);
+  const [linkDisplay, setLinkDisplay] = useState<Record<string, "url" | "name">>({});
   const [editingCell, setEditingCell] = useState<string | null>(null);
   const [newCol, setNewCol] = useState("");
   const [rows, setRows] = useState<Row[]>([{ name: "", value: "" }]);
@@ -38,8 +39,14 @@ function ListPage() {
   const [count, setCount] = useState(10);
   const [generating, setGenerating] = useState(false);
 
+  const labelColumnFor = (linkCol: string) =>
+    columns.find((x) => x !== linkCol) ?? linkCol;
+
   const toggleLinkColumn = (c: string) =>
     setLinkColumns((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
+
+  const setDisplayMode = (c: string, mode: "url" | "name") =>
+    setLinkDisplay((prev) => ({ ...prev, [c]: mode }));
 
   const handleGenerate = async () => {
     if (!listName.trim()) {
@@ -139,6 +146,7 @@ function ListPage() {
       <SiteHeader />
 
       <main className="mx-auto max-w-5xl px-6 py-10 space-y-8">
+        <h1 className="sr-only">List Maker — create custom lists with AI</h1>
         <section className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
             {t("list_name")}
@@ -205,6 +213,7 @@ function ListPage() {
           <div className="flex flex-wrap gap-2">
             {columns.map((c) => {
               const isLink = linkColumns.includes(c);
+              const mode = linkDisplay[c] ?? "url";
               return (
                 <span
                   key={c}
@@ -216,6 +225,24 @@ function ListPage() {
                 >
                   {isLink && <LinkIcon className="h-3.5 w-3.5" />}
                   {c}
+                  {isLink && (
+                    <span className="inline-flex rounded-full bg-background/60 ring-1 ring-primary/20 overflow-hidden text-[11px]">
+                      <button
+                        onClick={() => setDisplayMode(c, "url")}
+                        className={`px-2 py-0.5 ${mode === "url" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                        title="Show full URL"
+                      >
+                        link
+                      </button>
+                      <button
+                        onClick={() => setDisplayMode(c, "name")}
+                        className={`px-2 py-0.5 ${mode === "name" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                        title={`Show ${labelColumnFor(c)} as a clickable link`}
+                      >
+                        name
+                      </button>
+                    </span>
+                  )}
                   <button
                     onClick={() => toggleLinkColumn(c)}
                     className="text-muted-foreground hover:text-primary transition-colors"
@@ -287,22 +314,37 @@ function ListPage() {
                         const value = r[c] || "";
                         const isEditing = editingCell === cellKey;
                         const looksLikeUrl = /^https?:\/\//i.test(value);
+                        const mode = linkDisplay[c] ?? "url";
+                        const labelCol = labelColumnFor(c);
+                        const labelText = (r[labelCol] || "").trim();
 
                         if (isLink && value && !isEditing) {
                           return (
                             <td key={c} className="px-2 py-1.5">
                               <div className="flex items-center gap-1.5 h-8">
                                 {looksLikeUrl ? (
-                                  <a
-                                    href={value}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1 text-primary hover:underline truncate max-w-[240px]"
-                                    title={value}
-                                  >
-                                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
-                                    <span className="truncate">{value.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
-                                  </a>
+                                  mode === "name" && labelText ? (
+                                    <a
+                                      href={value}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-primary underline-offset-2 hover:underline truncate max-w-[280px]"
+                                      title={value}
+                                    >
+                                      {labelText}
+                                    </a>
+                                  ) : (
+                                    <a
+                                      href={value}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 text-primary hover:underline truncate max-w-[240px]"
+                                      title={value}
+                                    >
+                                      <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                      <span className="truncate">{value.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+                                    </a>
+                                  )
                                 ) : (
                                   <span className="text-muted-foreground italic truncate">{value}</span>
                                 )}
