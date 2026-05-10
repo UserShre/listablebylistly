@@ -151,10 +151,10 @@ function CodeEditorPage() {
 
       <main className="mx-auto max-w-5xl px-6 py-10 space-y-6">
         <header className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight flex items-center gap-2">
+          <div className="text-3xl font-semibold tracking-tight flex items-center gap-2">
             <Code2 className="h-7 w-7 text-primary" />
             AI Code Editor
-          </h1>
+          </div>
           <p className="text-muted-foreground">
             Paste your code — then let AI refactor, optimize, fix, comment, test, convert or continue it.
           </p>
