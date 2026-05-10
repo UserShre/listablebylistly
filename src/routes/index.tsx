@@ -65,12 +65,12 @@ function Home() {
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             {t("home_badge")}
           </div>
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
+          <div className="text-4xl sm:text-6xl font-bold tracking-tight">
             {t("home_hero_1")}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
               {t("home_hero_2")}
             </span>
-          </h1>
+          </div>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             {t("home_sub")}
           </p>

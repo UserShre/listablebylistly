@@ -146,7 +146,7 @@ function ListPage() {
       <SiteHeader />
 
       <main className="mx-auto max-w-5xl px-6 py-10 space-y-8">
-        <h1 className="sr-only">List Maker — create custom lists with AI</h1>
+        <div className="sr-only">List Maker — create custom lists with AI</div>
         <section className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
             {t("list_name")}
